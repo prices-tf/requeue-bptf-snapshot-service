@@ -9,6 +9,8 @@ import { Snapshot } from '../snapshot/interfaces/snapshot.interface';
 import { SnapshotService } from '../snapshot/snapshot.service';
 import { Config, DelayConfig } from '../common/config/configuration';
 import { ConfigService } from '@nestjs/config';
+import { AxiosError } from 'axios';
+import { HttpServiceError } from '../common/interfaces/http-service-error.interface';
 
 @Injectable()
 export class DelayService {
@@ -44,7 +46,18 @@ export class DelayService {
         ' ms...',
     );
 
-    await this.snapshotService.refreshListings(snapshot.sku, delay);
+    await this.snapshotService
+      .refreshListings(snapshot.sku, delay)
+      .catch((err: AxiosError<HttpServiceError>) => {
+        if (err.isAxiosError) {
+          if (err.response?.status >= 400 && err.response?.status < 500) {
+            // Ignore error
+            return;
+          }
+        }
+
+        throw err;
+      });
   }
 
   async getBySKU(sku: string): Promise<number> {
