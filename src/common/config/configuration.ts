@@ -33,7 +33,7 @@ export default (): Config => {
     delay: {
       min: parseInt(process.env.DELAY_MIN, 10),
       max: parseInt(process.env.DELAY_MAX, 10),
-      randomized: parseInt(process.env.DELAY_RANDOMIZE, 10),
+      randomized: parseInt(process.env.DELAY_RANDOMIZED, 10),
     },
     rabbitmq: {
       host: process.env.RABBITMQ_HOST,
