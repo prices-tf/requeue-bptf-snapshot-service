@@ -11,6 +11,11 @@ const validation = Joi.object({
     .integer()
     .positive()
     .default(24 * 60 * 60 * 1000),
+  DELAY_RANDOMIZED: Joi.number()
+    .integer()
+    .positive()
+    .allow(0)
+    .default(60 * 60 * 1000),
   RABBITMQ_HOST: Joi.string().required(),
   RABBITMQ_PORT: Joi.number().required(),
   RABBITMQ_USERNAME: Joi.string().required(),

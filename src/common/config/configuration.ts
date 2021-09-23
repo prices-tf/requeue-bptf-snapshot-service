@@ -16,6 +16,7 @@ export interface RabbitMQConfig {
 export interface DelayConfig {
   min: number;
   max: number;
+  randomized: number;
 }
 
 export interface Services {
@@ -32,6 +33,7 @@ export default (): Config => {
     delay: {
       min: parseInt(process.env.DELAY_MIN, 10),
       max: parseInt(process.env.DELAY_MAX, 10),
+      randomized: parseInt(process.env.DELAY_RANDOMIZE, 10),
     },
     rabbitmq: {
       host: process.env.RABBITMQ_HOST,

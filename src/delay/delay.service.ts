@@ -89,18 +89,21 @@ export class DelayService {
 
     const delayConfig = this.configService.get<DelayConfig>('delay');
 
+    const delay = sell.length === 0 ? averageAge : averageAge / sell.length;
+
     // Make sure delay is between min and max
-    const delay = isNaN(averageAge)
+    const clampedDelay = isNaN(averageAge)
       ? delayConfig.max
       : Math.max(
           delayConfig.min,
           Math.min(
             delayConfig.max,
-            sell.length === 0 ? averageAge : averageAge / sell.length,
+            // Randomize delay
+            delay - delayConfig.randomized * Math.random(),
           ),
         );
 
     // Don't delay if snapshot is already old
-    return Math.round(Math.max(0, delay - snapshotAge));
+    return Math.round(Math.max(0, clampedDelay - snapshotAge));
   }
 }
