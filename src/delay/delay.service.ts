@@ -23,9 +23,9 @@ export class DelayService {
   ) {}
 
   @RabbitSubscribe({
-    exchange: 'bptf-listing.handled',
+    exchange: 'bptf-snapshot.handled',
     routingKey: '*',
-    queue: 'requeueSnapshot',
+    queue: 'requeueHandledSnapshot',
     queueOptions: {
       arguments: {
         'x-queue-type': 'quorum',
