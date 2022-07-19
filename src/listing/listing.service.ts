@@ -15,6 +15,8 @@ export class ListingService {
   getListings(
     sku: string,
     intent: 'buy' | 'sell',
+    order: 'ASC' | 'DESC',
+    orderBy: string,
     page?: number,
     limit?: number,
   ): Promise<Paginated<Listing>> {
@@ -26,6 +28,8 @@ export class ListingService {
       .get(url, {
         params: {
           intent,
+          order,
+          orderBy,
           page,
           limit,
         },

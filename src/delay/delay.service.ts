@@ -82,6 +82,8 @@ export class DelayService {
     const listings = await this.listingService.getListings(
       snapshot.sku,
       'sell',
+      'DESC',
+      'lastSeenAt',
     );
 
     const averageAge =
