@@ -34,15 +34,23 @@ export class SnapshotService {
       });
   }
 
-  async refreshListings(sku: string, delay?: number): Promise<void> {
+  async refreshListings(
+    sku: string,
+    delay?: number,
+    priority?: number,
+  ): Promise<void> {
     const url = `${
       this.configService.get<Services>('services').snapshot
     }/listings/${sku}/refresh`;
 
-    const data: { delay?: number } = {};
+    const data: { delay?: number; priority?: number } = {};
 
     if (delay !== undefined && delay > 0) {
       data.delay = delay;
+    }
+
+    if (priority !== undefined && priority > 0) {
+      data.priority = priority;
     }
 
     await this.httpService.post(url, data).toPromise();

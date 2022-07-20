@@ -47,7 +47,11 @@ export class DelayService {
     );
 
     await this.snapshotService
-      .refreshListings(snapshot.sku, delay)
+      .refreshListings(
+        snapshot.sku,
+        delay,
+        snapshot.sku === '5021;6' ? 1 : undefined,
+      )
       .catch((err: AxiosError<HttpServiceError>) => {
         if (err.isAxiosError) {
           if (err.response?.status >= 400 && err.response?.status < 500) {
